@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'ecommerce-order-module-1:latest'
+    build:
+      context: .
+    container_name: ecommerce-order-module-1
+    depends_on:
+      - db
+    ports:
+      - "6869:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ecommerce-order-postgresql:5432/ecommerce-order-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    container_name: ecommerce-order-postgresql
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_DB=ecommerce-order-db
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+    ports:
+      - '1454:5432'
+    expose:
+      - '1454'
