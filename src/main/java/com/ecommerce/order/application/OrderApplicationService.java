@@ -20,7 +20,7 @@ public class OrderApplicationService {
 
     public void createOrder(OrderCreateRequest orderCreateRequest) throws DomainException {
         if (!this.orderRepository.isProductExist(orderCreateRequest.getProductId())) {
-            throw new RuntimeException(); // TODO fix
+            throw new DomainException("Product cannot be found");
         }
         Order order = Order.builder()
                 .productId(orderCreateRequest.getProductId())
