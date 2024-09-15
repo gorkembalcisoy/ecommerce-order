@@ -1,5 +1,6 @@
 package com.ecommerce.order.application;
 
+import com.ecommerce.order.domain.event.OrderEventPublisher;
 import com.ecommerce.order.domain.exception.DomainException;
 import com.ecommerce.order.domain.model.Order;
 import com.ecommerce.order.domain.model.OrderStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 public class OrderApplicationService {
 
     private final OrderRepository orderRepository;
+    private final OrderEventPublisher orderEventPublisher;
 
     public void createOrder(OrderCreateRequest orderCreateRequest) throws DomainException {
         if (!this.orderRepository.isProductExist(orderCreateRequest.getProductId())) {
@@ -27,6 +29,7 @@ public class OrderApplicationService {
                 .build();
         order.isValid();
         order.setId(this.orderRepository.save(order));
+        this.orderEventPublisher.publishOrderCreatedEvent(order.getProductId(), order.getId(), order.getOrderQuantity());
     }
 
     public void createProduct(String id) {
@@ -36,5 +39,19 @@ public class OrderApplicationService {
 
     public List<Order> findAll() {
         return this.orderRepository.findAll();
+    }
+
+    public void cancelOrder(String orderId) {
+        Long id = Long.parseLong(orderId);
+        Order order = this.orderRepository.findById(id);
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        this.orderRepository.update(order);
+    }
+
+    public void completeOrder(String orderId) {
+        Long id = Long.parseLong(orderId);
+        Order order = this.orderRepository.findById(id);
+        order.setOrderStatus(OrderStatus.COMPLETED);
+        this.orderRepository.update(order);
     }
 }

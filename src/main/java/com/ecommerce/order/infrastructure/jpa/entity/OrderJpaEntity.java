@@ -15,12 +15,15 @@ public class OrderJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private Long productId;
 
+    @Setter
     @Column(nullable = false)
     private int orderQuantity;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 }

@@ -13,4 +13,8 @@ public interface OrderRepository {
     boolean isProductExist(Long productId);
 
     List<Order> findAll();
+
+    Order findById(Long id);
+
+    void update(Order order);
 }

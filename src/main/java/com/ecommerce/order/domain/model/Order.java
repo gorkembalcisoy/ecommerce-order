@@ -15,6 +15,7 @@ public class Order {
     private Long id;
     private Long productId;
     private int orderQuantity;
+    @Setter
     private OrderStatus orderStatus;
 
     public void isValid() throws DomainException {
