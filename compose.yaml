@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   app:
-    image: 'ecommerce-order-module-1:latest'
+    image: 'ecommerce-order-image:latest'
     build:
       context: .
-    container_name: ecommerce-order-module-1
+    container_name: ecommerce-order-image
     depends_on:
       - db
     ports:
