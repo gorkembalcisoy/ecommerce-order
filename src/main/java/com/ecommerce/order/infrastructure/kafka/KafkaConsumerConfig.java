@@ -1,4 +1,4 @@
-package com.ecommerce.order.configuration;
+package com.ecommerce.order.infrastructure.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
